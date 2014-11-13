@@ -1,3 +1,10 @@
+function splitByDelimiter(input,delimiter){
+    var result = input.split(delimiter);
+    result[1] = (!result[1])?1:(parseInt)(input.split(delimiter)[1]);
+
+    return result;
+}
+
 /**
 *function printInventory(inputs):打印账单
 *@param:inputs 输入的购物单
@@ -7,13 +14,14 @@ function printInventory(inputs){
   var detailList = {};
   var realInputs = {};
   var sumPrice = 0;
-  var printInfo ='***<没钱赚商店>购物清单***\n' ;
+  var printInfo = '';
 
   for(var i=0;i<inputs.length;++i){
-    if(realInputs.hasOwnProperty(inputs[i])){
-      realInputs[inputs[i]] += 1;
+    var realInputsItem = splitByDelimiter(inputs[i],'-');
+    if(realInputs.hasOwnProperty(realInputsItem[0])){
+      realInputs[inputs[i]] += realInputsItem[1];
       }else{
-      realInputs[inputs[i]] = 1;
+      realInputs[realInputsItem[0]] = realInputsItem[1];
     }
   }
   var k = 0;
@@ -28,7 +36,7 @@ function printInventory(inputs){
   }
 
 
-
+  printInfo += '***<没钱赚商店>购物清单***\n' ;
   for(i in detailList){
     printInfo += '名称：'+ detailList[i].name +'，数量：'+detailList[i].num+detailList[i].unit+
       '，单价：'+detailList[i].price.toFixed(2)+'(元)，小计：'+
