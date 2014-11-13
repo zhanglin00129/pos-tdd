@@ -43,4 +43,30 @@ describe('pos', function () {
 
           expect(console.log).toHaveBeenCalledWith(expectText);
     });
+    it('should print a correct bill list when input some promotional barcodes',
+     function () {
+
+        spyOn(console, 'log');
+        inputs = inputs = [
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+        ];
+        printInventory(inputs);
+
+        var expectText =
+                '***<没钱赚商店>购物清单***\n' +
+                '名称：雪碧，数量：5瓶，单价：3.00(元)，小计：12.00(元)\n' +
+                '----------------------\n' +
+                '挥泪赠送商品：\n' +
+                '名称：雪碧，数量：1瓶\n' +
+                '----------------------\n' +
+                '总计：12.00(元)\n' +
+                '节省：3.00(元)\n' +
+                '**********************';
+
+          expect(console.log).toHaveBeenCalledWith(expectText);
+    });
 });
