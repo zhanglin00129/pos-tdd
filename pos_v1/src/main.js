@@ -5,18 +5,31 @@
 function printInventory(inputs){
   var allItems = loadAllItems();
   var detailList = {};
-  for(var j=0;j<inputs.length;j++){
-    for(var i=0;i<allItems.length;++i){
-       if(allItems[i].barcode == inputs[j]){
-           detailList[j] = allItems[i];
-         detailList[j].num = 1;
+  var realInputs = {};
+  var sumPrice = 0;
+  var printInfo ='***<没钱赚商店>购物清单***\n' ;
+
+  for(var i=0;i<inputs.length;++i){
+    if(realInputs.hasOwnProperty(inputs[i])){
+      realInputs[inputs[i]] += 1;
+      }else{
+      realInputs[inputs[i]] = 1;
+    }
+  }
+  var k = 0;
+  for(var item in realInputs){
+    for(var j=0;j<allItems.length;++j){
+       if(allItems[j].barcode == item){
+         detailList[k] = allItems[j];
+         detailList[k].num = realInputs[item];
+         k++;
        }
     }
   }
 
-  var sumPrice = 0;
-  var printInfo ='***<没钱赚商店>购物清单***\n' ;
-  for(var i in detailList){
+
+
+  for(i in detailList){
     printInfo += '名称：'+ detailList[i].name +'，数量：'+detailList[i].num+detailList[i].unit+
       '，单价：'+detailList[i].price.toFixed(2)+'(元)，小计：'+
       (detailList[i].num*detailList[i].price).toFixed(2)+'(元)\n' ;
