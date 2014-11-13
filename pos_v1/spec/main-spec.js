@@ -23,5 +23,22 @@ describe('pos', function () {
 
           expect(console.log).toHaveBeenCalledWith(expectText);
     });
+    it('should print a correct bill list when input a non-promotional barcode', function () {
 
+        spyOn(console, 'log');
+        inputs = ['ITEM000003'];
+        printInventory(inputs);
+
+        var expectText =
+            '***<没钱赚商店>购物清单***\n' +
+            '名称：荔枝，数量：1斤，单价：15.00(元)，小计：15.00(元)\n' +
+            '----------------------\n' +
+            '挥泪赠送商品：\n' +
+            '----------------------\n' +
+            '总计：15.00(元)\n' +
+            '节省：0.00(元)\n' +
+            '**********************';
+
+          expect(console.log).toHaveBeenCalledWith(expectText);
+    });
 });
