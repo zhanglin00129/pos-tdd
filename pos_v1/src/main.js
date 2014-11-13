@@ -36,20 +36,28 @@ function splitByDelimiter(input,delimiter){
 */
 function getDetailList(realInputs){
     var detailList = {};
-    var allItems = loadAllItems();
     var k = 0;
-      for(var item in realInputs){
-        for(var j=0;j<allItems.length;++j){
-           if(allItems[j].barcode == item){
-             detailList[k] = allItems[j];
-             detailList[k].num = realInputs[item];
-             k++;
-           }
-        }
-      }
+    for(var item in realInputs){
+      detailList[k] = getInfoFromAllItem(item);
+      detailList[k].num = realInputs[item];
+      k++;
+    }
     return detailList;
 }
 
+/**
+*function getInfoFromAllItem(barcode)
+*@param:barcode
+*@return:
+*/
+function getInfoFromAllItem(barcode){
+    var allItems = loadAllItems();
+    for(var i=0;i<allItems.length;++i){
+       if(barcode == allItems[i].barcode){
+       return allItems[i];
+       }
+    }
+}
 
 /**
 *function getTitle():返回账单title条目
